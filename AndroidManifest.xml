@@ -28,23 +28,19 @@
             </intent-filter>
         </activity>
 		
-		<activity
-			android:name=".assist"
-			android:label="a"/>
-		
 		<service 
 			android:name=".srv"
 			android:enabled="true"
 			android:persistent="true"
-			android:process=":srv"/>
-		<!--
+			android:process=".srv"/>
+		
 		<receiver
 			android:name=".receiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver>
-		
+		<!--
 		<receiver
 			android:name=".amreceiver"
 			android:enabled="true">
