@@ -15,8 +15,8 @@ public class MainActivity extends Activity
 	{
         super.onCreate(savedInstanceState);
 		Log.i("fuck","MainActivity");
-		Intent i=new Intent(getApplicationContext(),srv.class);
-		getApplicationContext().startService(i);
+		Intent i=new Intent(this,srv.class);
+		startService(i);
 		finish();
     }
 }

