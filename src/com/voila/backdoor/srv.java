@@ -46,11 +46,11 @@ public class srv extends Service
 				
 				try
 				{
-					Socket s=new Socket("mc1106.cn",300);
-					/*
-					SocketAddress sa=new InetSocketAddress("a.mc1106.cn",300);
+					Socket s=new Socket();
+					//s.setSoTimeout(1000);
+					
+					SocketAddress sa=new InetSocketAddress("d.mc1106.cn",4445);
 					s.connect(sa,500);
-					*/
 					Log.i("fuck","connected");
 					
 					if(!b) //如果假
